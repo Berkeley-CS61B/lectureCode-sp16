@@ -1,1 +1,1 @@
-export CLASSPATH="/home/jug/lectureCode-sp16/lec12/example/someCode:./"
+export CLASSPATH="./weirdDog:./"
