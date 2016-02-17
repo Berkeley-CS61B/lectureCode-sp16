@@ -4,7 +4,7 @@ public class EnvMap {
     public static void main (String[] args) {
         Map<String, String> env = System.getenv();
         
-        System.out.println("All command line arguments: ");
+        System.out.println("Printing your environment variables: ");
         for (String envName : env.keySet()) {
             System.out.format("%s=%s%n",
                               envName,
