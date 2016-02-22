@@ -23,37 +23,36 @@ public class MapHelper {
 		return maxKey;	
 	}
 
-	public static <A extends Number, B extends Number> List<Double> keyValueRatio(ArrayMap<A, B> am, A key) {
-		
+
+	/* Won't compile due to lack of Generic Covariance in Java. 
+	public static double keyValueRatio(ArrayMap<Number, Number> am, A key) {
 		return key.doubleValue() / am.get(key).doubleValue();
-		
-		for (int i = 0; i < keys.size(); i += 1) {
-			A key = keys.get(i);
-			B value = am.get(key);
-
-			double ratio = key.doubleValue() / value.doubleValue();
-			ratios.addLast(ratio);
-		}
-		return ratios;	
-	}
-
-
-	/* Alternate implementation: 
+	} */
 	
-	public static double keyValueRatio(ArrayMap<? extends Number, ? extends Number> am) {
-		List<Number> keys = am.keys();
-		LinkedList<Double> ratios = new LinkedList<Double>();
-		
-		for (int i = 0; i < keys.size(); i += 1) {
-			Number key = keys.get(i);
-			Number value = am.get(key);
 
-			double ratio = key.doubleValue() / value.doubleValue();
-			ratios.addLast(ratio);
-		}
-		return ratios;	
+	/* Valid implementations: 
+
+	public static <A extends Number, B extends Number> double keyValueRatio(ArrayMap<A, B> am, A key) {
+		return key.doubleValue() / am.get(key).doubleValue();
 	}*/
-	
+
+	/*
+	public static <A extends Number> double keyValueRatio(ArrayMap<A, ? extends Number> am, A key) {
+		return key.doubleValue() / am.get(key).doubleValue();
+	}*/
+
+/*public static <K extends Dog> void allBark(ArrayMap<K, ?> am) {
+	for (Dog d : am.keys()) {
+		d.bark();
+	}
+}
+*/
+
+public static void allBark(ArrayMap<? extends Dog, ?> am) {
+	for (Dog d : am.keys()) {
+		d.bark();		
+	}	
+}
 
 	public static void main(String[] args) {
 		ArrayMap<String, Integer> am = new ArrayMap<String, Integer>();
@@ -63,11 +62,10 @@ public class MapHelper {
   		assertEquals(null, MapHelper.get(am, "moo"));
   		assertEquals("ketchup", MapHelper.maxKey(am));
 
-		ArrayMap<Integer, Integer> am2 = new ArrayMap<Integer, Integer>();
-		am2.put(10, 10);
-		am2.put(5, 10);
-		List<Double> ratios = MapHelper.keyValueRatio(am2);
-		assertEquals(1.0, ratios.get(0), 0.0);
-		assertEquals(0.5, ratios.get(1), 0.0);
+  ArrayMap<FrenchDog, Integer> am2 = new ArrayMap<FrenchDog, Integer>();
+  am2.put(new FrenchDog("francis"), 10);
+  am2.put(new FrenchDog("francis jr"), 20);
+  allBark(am2);
+		
 	}
 } 

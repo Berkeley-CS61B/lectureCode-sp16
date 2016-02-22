@@ -1,7 +1,8 @@
 import java.util.List;
 import java.util.Arrays;
+import java.util.Iterator;
 
-public class ArrayMap<K, V> {
+public class ArrayMap<K, V> implements Iterable<K> {
 	private K[] keys;
 	private V[] values;
 	private int size;
@@ -33,9 +34,13 @@ public class ArrayMap<K, V> {
 		size += 1;
 	}
 
-	public V get(K key) {				
-		return values[findKey(key)];
-	}
+public V get(K key) {
+	int location = findKey(key);
+	if (location < 0) {
+		throw new IllegalArgumentException("Key " + key + " does not exist in map.");
+	}				
+	return values[findKey(key)];
+}
 
 	public boolean containsKey(K key) {					
 		int i = findKey(key);
@@ -47,5 +52,29 @@ public class ArrayMap<K, V> {
 			return null;
 		}
 		return Arrays.asList(keys).subList(0, size);
+	}
+
+public class KeyIterator implements Iterator<K>{
+	private int ptr;
+
+	public KeyIterator() {
+		ptr = 0;
+	}
+
+	public boolean hasNext() {
+		return (ptr != size);
+	}
+
+	public K next() {
+		K returnItem = keys[ptr];
+		ptr = ptr + 1;
+		return returnItem;
+	}
+}
+
+
+
+	public Iterator<K> iterator() {
+		return new KeyIterator();
 	}
 } 
