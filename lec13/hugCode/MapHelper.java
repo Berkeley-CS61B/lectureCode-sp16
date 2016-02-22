@@ -7,7 +7,7 @@ public class MapHelper {
 		return null;
 	}
 
-	public static <JohnDeNero extends Comparable<JohnDeNero>, HotDog> JohnDeNero maxKey(ArrayMap<JohnDeNero, HotDog> am) {
+	public static <JohnDeNero, HotDog> JohnDeNero maxKey(ArrayMap<JohnDeNero, HotDog> am) {
 		/*JohnDeNero keys = am.keys();
 		JohnDeNero maxKey = keys[0];
 		for (int i = 0; i < keys.length; i += 1) {
