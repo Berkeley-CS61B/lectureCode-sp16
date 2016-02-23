@@ -11,16 +11,17 @@ public class MapHelper {
 		return null;
 	}
 
-	public static <A extends Comparable<A>, B> A maxKey(ArrayMap<A, B> am) {
-		List<A> keys = am.keys();
-		A maxKey = keys.get(0);
-		for (int i = 0; i < keys.size(); i += 1) {
-			int cmp = keys.get(i).compareTo(maxKey);
-			if (cmp > 0) {
-				maxKey = keys.get(i);
-			}			
-		}	
-		return maxKey;	
+	public static <K extends Comparable<K>, V> K maxKey(ArrayMap<K, V> am) {
+	   	List<K> keys = am.keys();
+	   	K maxKey = keys.get(0);
+	   	for (int i = 0; i < keys.size(); i += 1) {
+	   		int cmp; 
+	   		cmp = keys.get(i).compareTo(maxKey);
+	      	if (cmp > 0) {
+	      		maxKey = keys.get(i);
+	      	}
+	   	}
+	   	return maxKey;
 	}
 
 
@@ -47,25 +48,18 @@ public class MapHelper {
 	}
 }
 */
-
-public static void allBark(ArrayMap<? extends Dog, ?> am) {
-	for (Dog d : am.keys()) {
-		d.bark();		
-	}	
-}
-
 	public static void main(String[] args) {
 		ArrayMap<String, Integer> am = new ArrayMap<String, Integer>();
   		am.put("hello", 5);
   		am.put("ketchup", 10);
   		assertEquals(5, (long) MapHelper.get(am, "hello"));
   		assertEquals(null, MapHelper.get(am, "moo"));
-  		assertEquals("ketchup", MapHelper.maxKey(am));
-
-  ArrayMap<FrenchDog, Integer> am2 = new ArrayMap<FrenchDog, Integer>();
-  am2.put(new FrenchDog("francis"), 10);
-  am2.put(new FrenchDog("francis jr"), 20);
-  allBark(am2);
-		
+//  		assertEquals("ketchup", MapHelper.maxKey(am));
+/*
+	  ArrayMap<FrenchDog, Integer> am2 = new ArrayMap<FrenchDog, Integer>();
+	  am2.put(new FrenchDog("francis"), 10);
+	  am2.put(new FrenchDog("francis jr"), 20);
+	  allBark(am2);
+		*/
 	}
 } 

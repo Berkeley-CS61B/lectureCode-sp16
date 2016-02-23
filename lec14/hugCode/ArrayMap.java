@@ -34,13 +34,12 @@ public class ArrayMap<K, V> implements Iterable<K> {
 		size += 1;
 	}
 
-public V get(K key) {
-	int location = findKey(key);
-	if (location < 0) {
-		throw new IllegalArgumentException("Key " + key + " does not exist in map.");
-	}				
-	return values[findKey(key)];
-}
+	public V get(K key) {
+		if (findKey(key) < 0) {
+			throw new IllegalArgumentException(key + " was not a valid key.");
+		}
+		return values[findKey(key)];
+	}
 
 	public boolean containsKey(K key) {					
 		int i = findKey(key);
@@ -54,27 +53,26 @@ public V get(K key) {
 		return Arrays.asList(keys).subList(0, size);
 	}
 
-public class KeyIterator implements Iterator<K>{
-	private int ptr;
+	public class MapWizard implements Iterator<K> {
+		private int notionOfWhereHeIs;
 
-	public KeyIterator() {
-		ptr = 0;
+		public MapWizard() {
+			notionOfWhereHeIs = 0;
+		}
+
+		public boolean hasNext() {
+			return (notionOfWhereHeIs < size);
+		}
+
+		public K next() {
+			K currentThing = keys[notionOfWhereHeIs];
+			notionOfWhereHeIs += 1;
+			return currentThing;
+		}
 	}
-
-	public boolean hasNext() {
-		return (ptr != size);
-	}
-
-	public K next() {
-		K returnItem = keys[ptr];
-		ptr = ptr + 1;
-		return returnItem;
-	}
-}
-
-
 
 	public Iterator<K> iterator() {
-		return new KeyIterator();
+		return new MapWizard();
 	}
+
 } 
